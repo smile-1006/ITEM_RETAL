@@ -24,4 +24,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Approve Item
+router.put('/:id/approve', async (req, res) => {
+    try {
+      const item = await Item.findById(req.params.id);
+      if (!item) return res.status(404).send('Item not found');
+      item.isApproved = true;
+      await item.save();
+      res.send('Item approved');
+    } catch (err) {
+      res.status(400).send(err.message);
+    }
+  });
+  
+
 module.exports = router;
